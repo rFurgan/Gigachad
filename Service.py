@@ -1,4 +1,4 @@
-class Launcher:
+class Service:
     def __init__(self, selected, name, path):
         self.selected = selected
         self.name = name

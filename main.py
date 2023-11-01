@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from Console import Console
-from Launcher import Launcher
+from Service import Service
 from Option import Option
 from os import system
 from sys import exit, argv
@@ -18,18 +18,18 @@ if __name__ == '__main__':
     if (len(argv) < 2):
         exit(1)
     console = Console(argv[1], [
-            Launcher(True, 'launcher_1.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
-            Launcher(False, 'launcher_2.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
-            Launcher(True, 'launcher_3.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
-            Launcher(True, 'launcher_4.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
-            Launcher(False, 'launcher_5.launch', '/c/Users/Pepe/Desktop/TODO.txt')
+            Service(True, 'launcher_1.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
+            Service(False, 'launcher_2.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
+            Service(True, 'launcher_3.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
+            Service(True, 'launcher_4.launch', '/c/Users/Pepe/Desktop/TODO.txt'),
+            Service(False, 'launcher_5.launch', '/c/Users/Pepe/Desktop/TODO.txt')
         ],
         [
-            Option('a', '/c/Users/Pepe/Desktop/TODO.txt', '~', '-a', {}),
-            Option('b', '/c/Users/Pepe/Desktop/TODO.txt', '~', '-u', {}),
-            Option('c', '/c/Users/Pepe/Desktop/TODO.txt', '~', '-ls', {}),
-            Option('d', '/c/Users/Pepe/Desktop/TODO.txt', '~', '-r', {}),
-            Option('e', '/c/Users/Pepe/Desktop/TODO.txt', '~', '-q', {})
+            Option('a', '~', '-a', { "path": "/usr/bin", "enc": "/dev/null"}),
+            Option('b', '~', '-u', {"path": "/usr/bin", "enc": "/dev/null", "idlk": "test"}),
+            Option('c', '~', '-ls', {}),
+            Option('d', '~', '-r', {}),
+            Option('e', '~', '-q', {})
         ])
     console.start()
 

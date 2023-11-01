@@ -21,27 +21,30 @@ class Console:
             service = self.__services.items[i]
             print(f"{('>' if (i == self.__services.index and not self.__exploring) else ' ')} {('[x]' if (service.selected) else '[ ]')} {service.name}")
             if (i == self.__services.index):
-                option = self.__options.items[self.__services.index]
-                fields = option.get()
-                keys = list(fields.keys())
-                for field, value in fields.items():
-                    print(f"\t{('>' if (keys.index(field) == self.__options.index and self.__exploring) else ' ')} {field}: {value}")
+                options = self.__options.items[self.__services.index].options
+                optionsItems = options.items()
+                optionsKeys = list(options.keys())
+                for option, value in optionsItems:
+                    print(f"\t{('>' if (optionsKeys.index(option) == self.__options.index and self.__exploring) else ' ')} {option}: {'' if option == 'env' else value}")
                     # TODO Find a way to edit options (input not working properly, nano/vim too slow)
         self.__printShortcuts()
 
     def __printShortcuts(self):
-        service = self.__services.items[self.__services.index]
-        print(f"\n[ENTER] {'un' if service.selected else ''}select [E] {'exit' if self.__exploring else 'enter'} [ESC] quit")
+        print(f"\n[ENTER] {'un' if self.__services.item().selected else ''}select [E] {'exit' if self.__exploring else 'enter'} [ESC] quit")
 
     def __onUp(self):
         if (self.__exploring):
             self.__options.index = self.__options.index - 1 if (self.__options.index > 0) else self.__options.max - 1
+            if (self.__options.index == 3):
+                self.__onUp()
         else:
             self.__services.index = self.__services.index - 1 if (self.__services.index > 0) else self.__services.max - 1
 
     def __onDown(self):
         if (self.__exploring):
             self.__options.index = self.__options.index + 1 if (self.__options.index < self.__options.max - 1) else 0
+            if (self.__options.index == 3):
+                self.__onDown()
         else:
             self.__services.index = self.__services.index + 1 if (self.__services.index < self.__services.max - 1) else 0
 
@@ -50,16 +53,14 @@ class Console:
             pass
         # TODO
         #     self.__editing = True
-        #     self.__options.items[self.__options.index].edit = True
+        #     self.__options.item.edit = True
         else:
-            service = self.__services.items[self.__services.index]
-            service.selected = not service.selected
+            self.__services.item().selected = not self.__services.item().selected
 
     def __onE(self):
         self.__exploring = not self.__exploring
-        # TODO
-        # if (self.__exploring):
-        #     self.__options.max = len(self.__options[self.__options.index].args) + 4
+        if (self.__exploring):
+            self.__options.max = self.__options.item(self.__services.index).max
         self.__options.index = 0
 
     def __onKeyPress(self, key):
