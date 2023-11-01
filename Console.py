@@ -25,8 +25,12 @@ class Console:
                 optionsItems = options.items()
                 optionsKeys = list(options.keys())
                 for option, value in optionsItems:
+                    if (self.__options.item(self.__services.index).edit):
+                        # TODO  Edit mode
+                        #       can do it with keyboard.write and input afterwards
+                        #       PROBLEM: All too slow
+                        pass
                     print(f"\t{('>' if (optionsKeys.index(option) == self.__options.index and self.__exploring) else ' ')} {option}: {'' if option == 'env' else value}")
-                    # TODO Find a way to edit options (input not working properly, nano/vim too slow)
         self.__printShortcuts()
 
     def __printShortcuts(self):
@@ -50,10 +54,7 @@ class Console:
 
     def __onEnter(self):
         if (self.__exploring):
-            pass
-        # TODO
-        #     self.__editing = True
-        #     self.__options.item.edit = True
+            self.__options.item(self.__services.index).edit = not self.__options.item(self.__services.index).edit
         else:
             self.__services.item().selected = not self.__services.item().selected
 
